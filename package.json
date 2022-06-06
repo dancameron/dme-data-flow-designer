@@ -1,0 +1,22 @@
+{
+  "name": "dme-data-flow-designer",
+  "version": "1.0.0",
+  "description": "Sensor Data Flow Design Tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://dancameron@github.com/dancameron/dme-data-flow-designer.git"
+  },
+  "author": "dancameron",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dancameron/dme-data-flow-designer/issues"
+  },
+  "homepage": "https://github.com/dancameron/dme-data-flow-designer#readme",
+  "dependencies": {
+    "plain-draggable": "^2.5.14"
+  }
+}
