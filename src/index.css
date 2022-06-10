@@ -6,3 +6,12 @@ main {
     max-height: 600px;
     padding: 2% 3%;
 }
+
+@layer components {
+  .icon {
+    @apply w-12 h-12 cursor-row-resize mx-auto px-2 py-1 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-full shadow-sm ring-4 ring-offset-2 ring-offset-slate-50 ring-slate-100;
+  }
+  .annotation {
+    @apply cursor-move px-3 py-1.5 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-md shadow-sm ring-4 ring-offset-2 ring-offset-slate-50 ring-slate-100;
+  }
+}
