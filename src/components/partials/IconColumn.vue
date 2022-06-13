@@ -78,14 +78,14 @@
 
 		<div class="w-16 mx-auto" :class="{ 'w-32': largeIcon }">
 			<div class="w-auto flex flex-row flex-wrap gap-x-2">
-				<div v-for="icon in availableIcons" class="icon-small tooltip" tool-tips="Click to add"
+				<div v-for="icon in availableIcons" class="icon-small tooltip" :tool-tips="'Add ' + icon.name"
 				     @click="add(icon.id)"
 				     :class="{ 'opacity-25': !canAdd(icon.id) }">
 					<svg xmlns="http://www.w3.org/2000/svg"
 					     class="fill-current w-full h-full"
 					     viewBox="0 0 16 16" v-html="icon.svg"></svg>
 				</div>
-				<div v-if="annotate" class="icon-small" @click="annotation()">
+				<div v-if="annotate" class="icon-small tooltip" tool-tips="Add Annotation" @click="annotation()">
 					<svg xmlns="http://www.w3.org/2000/svg"
 					     class="fill-current w-full h-full"
 					     viewBox="0 0 16 16">
@@ -95,7 +95,7 @@
 						      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 					</svg>
 				</div>
-				<div v-if="spacer" class="icon-small" @click="addSpacer()">
+				<div v-if="spacer" class="icon-small tooltip" tool-tips="Add Spacer" @click="addSpacer()">
 					<svg xmlns="http://www.w3.org/2000/svg"
 					     class="fill-current w-full h-full"
 					     viewBox="0 0 16 16">
@@ -182,7 +182,7 @@ export default {
 			let index = this.icons.findIndex(item => item.id === id);
 			console.log(this.icons.length)
 			console.log(this.limit)
-			if (this.limit <= this.icons.length) {
+			if (this.limit <= this.icons.filter((obj) => obj.svg).length) {
 				return false;
 			}
 
@@ -216,8 +216,9 @@ export default {
 			);
 		},
 	},
+	computed: {
 
-	computed: {}
+	}
 }
 </script>
 
