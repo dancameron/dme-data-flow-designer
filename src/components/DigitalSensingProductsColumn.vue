@@ -1,87 +1,18 @@
+<script setup>
+import IconColumn from "./partials/IconColumn.vue";
+</script>
+
 <template>
-	<div class="h-full">
-
-		<draggable v-model="icons" item-key="id" class="h-full flex flex-col justify-evenly mx-auto space-y-4">
-			<template #item="{element}">
-
-				<div v-if="element.svg" class="flex-initial">
-					<div class="icon group relative">
-						<span
-					    class="absolute -top-1 -left-1 invisible group-hover:visible cursor-pointer rounded-full bg-red-500 text-red-50 p-1"
-					    v-on:click="doDelete(element.id)">
-						<svg xmlns="http://www.w3.org/2000/svg"
-						     class="fill-current w-3 h-3" viewBox="0 0 16 16">
-							<path
-							    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-						</svg>
-					</span>
-
-					<svg xmlns="http://www.w3.org/2000/svg"
-					     class="fill-current w-full h-full" viewBox="0 0 16 16"
-					     v-html="element.svg"></svg>
-					</div>
-				</div>
-
-				<div v-else-if="element.text"
-				     class="annotation group relative w-16">
-					<span
-					    class="absolute -top-2 -left-2 invisible group-hover:visible cursor-pointer rounded-full bg-red-500 text-red-50 p-1"
-					    v-on:click="doDelete(element.id)">
-			                        <svg xmlns="http://www.w3.org/2000/svg"
-			                             class="fill-current w-3 h-3" viewBox="0 0 16 16">
-		                                        <path
-		                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-						</svg>
-		                        </span>
-					<div
-					    class="cursor-text rounded-sm p-px focus:outline-none focus:ring-1 focus:border-sky-500 focus:ring-sky-500 focus:ring-2"
-					    contenteditable
-					    v-html="element.text"/>
-				</div>
-			</template>
-		</draggable>
-
-		<div class="w-16">
-			<div class="w-auto flex flex-row flex-wrap">
-				<div v-for="icon in availableIcons" class="p-px">
-					<div class="w-4 h-4 cursor-pointer" @click="add(icon.id)"
-					     :class="{ 'opacity-25': !canAdd(icon.id) }">
-						<svg xmlns="http://www.w3.org/2000/svg"
-						     class="fill-current w-full h-full"
-						     viewBox="0 0 16 16" v-html="icon.svg"></svg>
-					</div>
-				</div>
-				<div v-if="annotate" class="p-px">
-					<div class="w-4 h-4 cursor-pointer" @click="annotation()">
-						<svg xmlns="http://www.w3.org/2000/svg"
-						     class="fill-current w-full h-full"
-						     viewBox="0 0 16 16">
-							<path
-							    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-							<path fill-rule="evenodd"
-							      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-						</svg>
-					</div>
-				</div>
-
-			</div>
-		</div>
-
-	</div>
+	<IconColumn :availableIcons="availableIcons" :annotate="true" :title="title" :pluralTitle="pluralTitle" />
 </template>
 
 <script>
-import draggable from "vuedraggable";
-
 export default {
 	name: 'DigitalSensing',
-	components: {
-		draggable
-	},
 	data() {
 		return {
-			icons: [],
-			annotate: true,
+			title: 'Digital Sensing Product',
+			pluralTitle: 'Digital Sensing Products',
 			availableIcons: [
 				{
 					name: "Smart Watch",
@@ -125,59 +56,9 @@ export default {
 					single: true,
 					svg: '<path d="M6.75 1a.75.75 0 0 1 .75.75V8a.5.5 0 0 0 1 0V5.467l.086-.004c.317-.012.637-.008.816.027.134.027.294.096.448.182.077.042.15.147.15.314V8a.5.5 0 1 0 1 0V6.435a4.9 4.9 0 0 1 .106-.01c.316-.024.584-.01.708.04.118.046.3.207.486.43.081.096.15.19.2.259V8.5a.5.5 0 0 0 1 0v-1h.342a1 1 0 0 1 .995 1.1l-.271 2.715a2.5 2.5 0 0 1-.317.991l-1.395 2.442a.5.5 0 0 1-.434.252H6.035a.5.5 0 0 1-.416-.223l-1.433-2.15a1.5 1.5 0 0 1-.243-.666l-.345-3.105a.5.5 0 0 1 .399-.546L5 8.11V9a.5.5 0 0 0 1 0V1.75A.75.75 0 0 1 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.632 2.632 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>'
 				}
-			],
-			dragging: false,
-			componentData: {
-				type: "transition",
-				name: "flip-list"
-			}
+			]
 		};
-	},
-	methods: {
-		add: function (id) {
-			if (!this.canAdd(id)) {
-				console.log('method says no!')
-				return false;
-			}
-
-			let index = this.availableIcons.findIndex(item => item.id === id);
-			this.icons.push(
-			    this.availableIcons[index]
-			);
-		},
-		doDelete(id) {
-			let index = this.icons.findIndex(item => item.id === id);
-			this.icons.splice(index, 1);
-		},
-		clear() {
-			this.icons = [];
-		},
-		canAdd(id) {
-			let index = this.icons.findIndex(item => item.id === id);
-			console.log(index);
-			// if not present it can be added
-			if (index < 0) { // if not found, index will be -1
-				return true;
-			}
-			// icon has been added, check if it wants to be single
-			let icon = this.icons[index];
-			if (icon.single) {
-				return false;
-			}
-			return true;
-		},
-		annotation() {
-			console.log(this.icons);
-			this.icons.push(
-			    {
-				    'text': "Click Here to Edit."
-			    }
-			);
-			console.log(this.icons);
-		},
-	},
-
-	computed: {}
+	}
 }
 </script>
 

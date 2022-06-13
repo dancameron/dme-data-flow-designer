@@ -8,10 +8,94 @@ main {
 }
 
 @layer components {
-  .icon {
-    @apply w-12 h-12 cursor-row-resize mx-auto px-2 py-1 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-full shadow-sm ring-4 ring-offset-2 ring-offset-slate-50 ring-slate-100;
-  }
-  .annotation {
-    @apply cursor-move px-3 py-1.5 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-md shadow-sm ring-4 ring-offset-2 ring-offset-slate-50 ring-slate-100;
-  }
+    .icon {
+        @apply w-12 h-12 delay-150 cursor-row-resize mx-auto px-2 py-1 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-full shadow-sm ring-4 ring-offset-2 ring-offset-slate-50 ring-slate-100;
+        animation: animate-in .3s linear;
+    }
+
+    .icon-no-style {
+        @apply bg-transparent border-transparent ring-0 p-1;
+    }
+
+    .icon-large {
+        @apply w-24 h-24 delay-150 mx-auto px-4 py-2;
+        animation: animate-in .3s linear;
+    }
+
+    .icon-small {
+        @apply w-6 h-6 transition-opacity ease-in-out delay-150 cursor-pointer mx-auto px-1 py-0.5 m-1 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-full shadow-sm ring-2 ring-slate-100 hover:ring-green-400;
+    }
+
+    .icon-delete {
+        @apply absolute transition-opacity ease-in-out delay-75 -top-1 -left-1 opacity-0 group-hover:opacity-100 cursor-pointer rounded-full bg-red-500 text-red-50 p-1 pointer-events-auto;
+    }
+
+    .annotation {
+        @apply cursor-row-resize px-3 py-1.5 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-md shadow-sm ring-4 ring-offset-2 ring-offset-slate-50 ring-slate-100;
+        animation: animate-in .3s linear;
+    }
+
+    .spacer {
+        @apply transition w-auto h-12 hover:border hover:bg-slate-200 hover:rounded hover:shadow-sm hover:ring-4 hover:ring-offset-2 hover:ring-offset-slate-50 hover:ring-slate-100;
+    }
+
+    @keyframes animate-in {
+        from {
+            transform: scale(0);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+}
+
+.tooltip{
+  position: relative;
+  display: inline;
+}
+.tooltip:after{
+  display: block;
+  visibility: hidden;
+  position: absolute;
+  bottom: 26px;
+  left: -10px;
+  opacity: 0;
+  content: attr(tool-tips); /* might also use attr(title) */
+  height: auto;
+  min-width: 100px;
+  padding: 5px 8px;
+  z-index: 999;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  background: rgba(0,0,0,0.85);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.tooltip:before {
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  left: 25%;
+  bottom: 22px;
+  opacity: 0;
+  content: "";
+  border-style: solid;
+  border-width: 6px 6px 0 6px;
+  border-color: rgba(0,0,0,0.85) transparent transparent transparent;
+}
+.tooltip:before:hover {visibility: hidden}
+.tooltip:hover:after{ visibility: visible; opacity: 1; bottom: 30px; }
+.tooltip:hover:before{ visibility: visible; opacity: 1; bottom: 26px; }
+.tooltip:after, .tooltip:before {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
