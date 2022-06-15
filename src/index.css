@@ -7,9 +7,17 @@ main {
     padding: 2% 3%;
 }
 
+a, .link{
+    color: #0b585e;
+    text-decoration: underline;
+}
+a:hover, .link:hover {
+    text-decoration: none;
+
+}
 @layer components {
     .icon {
-        @apply w-12 h-12 delay-150 cursor-row-resize mx-auto px-2 py-1 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-full shadow-sm ring-4 ring-offset-2 ring-offset-slate-50 ring-slate-100;
+        @apply w-12 h-12 delay-150 cursor-row-resize mx-auto px-2 py-1 text-xs bg-gray-200 text-gray-700 border border-gray-200 rounded-full shadow-sm ring-4 ring-offset-2 ring-offset-gray-50 ring-gray-100;
         animation: animate-in .3s linear;
     }
 
@@ -23,7 +31,7 @@ main {
     }
 
     .icon-small {
-        @apply w-6 h-6 transition-opacity ease-in-out delay-150 cursor-pointer mx-auto px-1 py-0.5 m-1 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-full shadow-sm ring-2 ring-slate-100 hover:ring-green-400;
+        @apply w-6 h-6 transition-opacity ease-in-out delay-150 cursor-pointer mx-auto px-1 py-0.5 m-1 text-xs bg-gray-200 text-gray-700 border border-gray-200 rounded-full shadow-sm ring-2 ring-gray-100 hover:ring-green-400;
     }
 
     .icon-delete {
@@ -31,12 +39,12 @@ main {
     }
 
     .annotation {
-        @apply cursor-row-resize px-3 py-1.5 text-xs bg-slate-200 text-slate-700 border border-slate-200 rounded-md shadow-sm ring-4 ring-offset-2 ring-offset-slate-50 ring-slate-100;
+        @apply cursor-row-resize px-3 py-1.5 text-xs bg-gray-200 text-gray-700 border border-gray-200 rounded-md shadow-sm ring-4 ring-offset-2 ring-offset-gray-50 ring-gray-100;
         animation: animate-in .3s linear;
     }
 
     .spacer {
-        @apply transition w-auto h-12 hover:border hover:bg-slate-200 hover:rounded hover:shadow-sm hover:ring-4 hover:ring-offset-2 hover:ring-offset-slate-50 hover:ring-slate-100;
+        @apply transition w-auto h-12 hover:border hover:bg-gray-200 hover:rounded hover:shadow-sm hover:ring-4 hover:ring-offset-2 hover:ring-offset-gray-50 hover:ring-gray-100;
     }
 
     @keyframes animate-in {
