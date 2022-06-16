@@ -72,21 +72,21 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 					<div class="flex mt-0.5">
 						<div class="space-y-2">
 							<div class="flex items-center">
-								<input id="apphubtrue" name="apphub"
+								<input id="apphubtrue"
 								       type="radio"
 								       aria-describedby="Add App and Hub Column"
-								       v-model="apphub"
-								       value='true'
+								       :checked="isColumnShown('apphub')"
+								       @click="addColumn('apphub')"
 								       class="focus:ring-brand h-4 w-4 text-brand-dark border-gray-300">
 								<label for="apphubtrue"
 								       class="ml-1 block text-sm font-medium text-gray-700">
 									Yes </label>
 							</div>
 							<div class="flex items-center">
-								<input id="apphubfalse" name="apphub"
+								<input id="apphubfalse"
 								       type="radio"
-								       v-model="apphub"
-								       value='false'
+								       :checked="!isColumnShown('apphub')"
+								       @click="removeColumn('apphub')"
 								       class="focus:ring-brand h-4 w-4 text-brand-dark border-gray-300">
 								<label for="apphubfalse"
 								       class="ml-1 block text-sm font-medium text-gray-700">
@@ -142,8 +142,8 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 								<input id="manufacturertrue" name="manufacturer"
 								       type="radio"
 								       aria-describedby="Add Manufacturer's Servers"
-								       v-model="manufacturer"
-								       value='true'
+								       :checked="isColumnShown('manufacturer')"
+								       @click="addColumn('manufacturer')"
 								       class="focus:ring-brand h-4 w-4 text-brand-dark border-gray-300">
 								<label for="manufacturertrue"
 								       class="ml-1 block text-sm font-medium text-gray-700">
@@ -152,8 +152,8 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 							<div class="flex items-center">
 								<input id="manufacturerfalse" name="manufacturer"
 								       type="radio"
-								       v-model="manufacturer"
-								       value='false'
+								       :checked="!isColumnShown('manufacturer')"
+								       @click="removeColumn('manufacturer')"
 								       class="focus:ring-brand h-4 w-4 text-brand-dark border-gray-300">
 								<label for="manufacturerfalse"
 								       class="ml-1 block text-sm font-medium text-gray-700">
@@ -205,8 +205,8 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 								<input id="analyticstrue" name="analytics"
 								       type="radio"
 								       aria-describedby="Add Manufacturer's Servers"
-								       v-model="analytics"
-								       value='true'
+								       :checked="isColumnShown('analytics')"
+								       @click="addColumn('analytics')"
 								       class="focus:ring-brand h-4 w-4 text-brand-dark border-gray-300">
 								<label for="analyticstrue"
 								       class="ml-1 block text-sm font-medium text-gray-700">
@@ -215,8 +215,8 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 							<div class="flex items-center">
 								<input id="analyticsfalse" name="analytics"
 								       type="radio"
-								       v-model="analytics"
-								       value='false'
+								       :checked="!isColumnShown('analytics')"
+								       @click="removeColumn('analytics')"
 								       class="focus:ring-brand h-4 w-4 text-brand-dark border-gray-300">
 								<label for="analyticsfalse"
 								       class="ml-1 block text-sm font-medium text-gray-700">
@@ -238,21 +238,32 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 			    v-if="currentStep === 2"
 			    class="grid grid-flow-col auto-cols-max justify-evenly gap-0 h-full">
 				<DigitalSensingProductsColumn/>
-				<DividerArrow v-if="apphub === 'true'"/>
-				<AppsHubsColumn v-if="apphub === 'true'"/>
+				<DividerArrow v-if="isColumnShown('apphub')"/>
+				<AppsHubsColumn v-if="isColumnShown('apphub')"/>
 				<DividerArrow/>
 				<CentralizedColumn class="col-span-2"/>
-				<DividerArrow v-if="manufacturer === 'true'"/>
-				<ManufacturersColumn class="col-span-2" v-if="manufacturer === 'true'"/>
+				<DividerArrow v-if="isColumnShown('manufacturer')"/>
+				<ManufacturersColumn class="col-span-2" v-if="isColumnShown('manufacturer')"/>
 				<DividerArrow/>
 				<FilteringStorageColumn/>
-				<DividerArrow v-if="analytics === 'true'"/>
-				<AnalyticsQueryingColumn v-if="analytics === 'true'"/>
+				<DividerArrow v-if="isColumnShown('analytics')"/>
+				<AnalyticsQueryingColumn v-if="isColumnShown('analytics')"/>
 
 			</div>
 
 			<div v-if="currentStep === 3">
 				TODO: Show Image and Download Button
+
+				<p>
+					Testing Info:
+				</p>
+				<p>
+
+		{{ currentStep }}
+		{{ shownInfo }}
+		{{ columnOptions }}
+
+				</p>
 			</div>
 		</div>
 
@@ -267,24 +278,39 @@ export default {
 	data() {
 		return {
 			currentStep: 1,
-			shownInfo: [],
-			apphub: false,
-			manufacturer: false,
-			analytics: false,
+			shownInfo: 0,
+			columnOptions: [],
 		};
 	},
+	props: {},
 	methods: {
 		isInfoShown: function (step) {
-			return this.shownInfo.includes(step);
+			return this.shownInfo === step;
 		},
 		showInfo: function (step) {
-			if (this.shownInfo.includes(step)) {
-				return false;
-			}
-			this.shownInfo.push(step);
+			this.shownInfo = step;
 		},
 		stepNav: function (step) {
 			this.currentStep = step
+		},
+		isColumnShown: function (columnKey) {
+			console.log(this.columnOptions.includes(columnKey))
+			return this.columnOptions.includes(columnKey);
+		},
+		addColumn: function (columnKey) {
+			if (this.columnOptions.includes(columnKey)) {
+				return true;
+			}
+			this.columnOptions.push(columnKey);
+		},
+		removeColumn: function (columnKey) {
+			if (!this.columnOptions.includes(columnKey)) {
+				return false;
+			}
+			let i = this.columnOptions.indexOf(columnKey);
+			if (i > -1) {
+				this.columnOptions.splice(i, 1);
+			}
 		},
 		stepStatus: function (step) {
 

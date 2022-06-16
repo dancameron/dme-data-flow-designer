@@ -15,6 +15,7 @@ a:hover, .link:hover {
     text-decoration: none;
 
 }
+
 @layer components {
     .icon {
         @apply w-12 h-12 delay-150 cursor-row-resize mx-auto px-2 py-1 text-xs bg-gray-200 text-gray-700 border border-gray-200 rounded-full shadow-sm ring-4 ring-offset-2 ring-offset-gray-50 ring-gray-100;
