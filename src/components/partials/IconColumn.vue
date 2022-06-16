@@ -77,7 +77,7 @@
 			</template>
 		</draggable>
 
-		<div class="w-16 mx-auto" :class="{ 'w-32': largeIcon }">
+		<div class="icon-drawer w-16 mx-auto" :class="{ 'w-32': largeIcon }">
 			<div class="w-auto flex flex-row flex-wrap gap-x-2">
 				<div v-for="icon in availableIcons" class="icon-small tooltip" :tool-tips="'Add ' + icon.name"
 				     @click="add(icon.id)"

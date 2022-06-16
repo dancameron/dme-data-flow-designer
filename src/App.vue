@@ -29,7 +29,7 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 			</nav>
 		</div>
 
-		<div class="aspect-video bg-gray-50 h-full py-16 px-12">
+		<div id="slide-design" class="aspect-video h-full py-16 px-12 bg-gray-50">
 
 			<fieldset
 			    v-if="currentStep === 1"
@@ -252,6 +252,20 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 			</div>
 
 			<div v-if="currentStep === 3">
+				<div class="text-right">
+
+					<a
+					    :href="generatedImage"
+					    download="dme-slide.png"
+					    class="mb-6 no-underline bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand">
+						Download Slide
+					</a>
+
+					<img :src="generatedImage" alt="Your DME Image" class="border
+					     border-gray-200 rounded-sm shadow-sm ring-4 ring-offset-2
+					     ring-offset-gray-50 ring-gray-100">
+
+				</div>
 				TODO: Show Image and Download Button
 
 				<p>
@@ -259,9 +273,9 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 				</p>
 				<p>
 
-		{{ currentStep }}
-		{{ shownInfo }}
-		{{ columnOptions }}
+					{{ currentStep }}
+					{{ shownInfo }}
+					{{ columnOptions }}
 
 				</p>
 			</div>
@@ -273,6 +287,9 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 </template>
 
 <script>
+
+import domtoimage from "dom-to-image-more";
+
 export default {
 	name: 'DME App',
 	data() {
@@ -280,6 +297,8 @@ export default {
 			currentStep: 1,
 			shownInfo: 0,
 			columnOptions: [],
+			generatedImage: '',
+			capturing: false,
 		};
 	},
 	props: {},
@@ -290,7 +309,34 @@ export default {
 		showInfo: function (step) {
 			this.shownInfo = step;
 		},
+		setImage: function (dataUrl) {
+			this.generatedImage = dataUrl;
+		},
+		filterForDomImage: function (node) {
+			if (node.classList) return !node.classList.contains("icon-drawer");
+			return true;
+		},
 		stepNav: function (step) {
+			if (step === 3) {
+				if ( this.currentStep === 1 ) {
+					return this.currentStep = 2;
+				}
+				this.capturing = true;
+				console.log('domtoimage!')
+				domtoimage
+				    .toPng(document.getElementById('slide-design'), {filter: this.filterForDomImage})
+				    .then((dataUrl) => {
+					    this.setImage(dataUrl);
+					    this.capturing = false;
+					    this.currentStep = 3;
+				    })
+				    .catch(function (error) {
+					    this.capturing = false;
+					    console.error('oops, something went wrong!', error);
+					    this.currentStep = 2;
+				    });
+				return;
+			}
 			this.currentStep = step
 		},
 		isColumnShown: function (columnKey) {

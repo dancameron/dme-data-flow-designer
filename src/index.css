@@ -6,7 +6,9 @@ main {
     max-height: 600px;
     padding: 2% 3%;
 }
-
+* {
+    border-color: transparent;
+}
 a, .link{
     color: #0b585e;
     text-decoration: underline;
