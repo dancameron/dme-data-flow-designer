@@ -6,12 +6,13 @@
 			<template v-else>{{ pluralTitle }}</template>
 		</header>
 
-		<draggable v-model="icons" item-key="id" class="h-full flex flex-col justify-center mx-auto space-y-4">
+		<draggable v-model="icons" item-key="id" class="h-full flex flex-col justify-center mx-auto space-y-4"  :sort="sortable">
 			<template #item="{element}">
 
 				<div v-if="element.svg" class="flex-initial">
 					<div class="icon group relative" :class="{ 'icon-large': largeIcon, 'icon-no-style': element.style === false }">
 						<span
+						    v-if="!element.locked"
 						    class="icon-delete"
 						    v-on:click="doDelete(element.id)">
 							<svg xmlns="http://www.w3.org/2000/svg"
@@ -140,6 +141,10 @@ export default {
 		limit: {
 			type: Number,
 			default: 10
+		},
+		sortable: {
+			type: Boolean,
+			default: true
 		},
 		spacer: {
 			type: Boolean,
