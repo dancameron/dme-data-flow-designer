@@ -33,6 +33,11 @@ a:hover, .link:hover {
         animation: animate-in .3s linear;
     }
 
+     .icon-larger {
+        @apply w-32 h-32 delay-150 mx-auto px-4 py-2;
+        animation: animate-in .3s linear;
+    }
+
     .icon-small {
         @apply w-6 h-6 transition-opacity ease-in-out delay-150 cursor-pointer mx-auto px-1 py-0.5 m-1 text-xs bg-gray-200 text-gray-700 border border-gray-200 rounded-full shadow-sm ring-2 ring-gray-100 hover:ring-green-400;
     }

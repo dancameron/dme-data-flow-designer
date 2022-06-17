@@ -6,11 +6,13 @@
 			<template v-else>{{ pluralTitle }}</template>
 		</header>
 
-		<draggable v-model="icons" item-key="id" class="h-full flex flex-col justify-center mx-auto space-y-4"  :sort="sortable">
+		<draggable v-model="icons" item-key="id" class="h-full flex flex-col justify-center mx-auto space-y-4"
+		           :sort="sortable">
 			<template #item="{element}">
 
 				<div v-if="element.svg" class="flex-initial">
-					<div class="icon group relative" :class="{ 'icon-large': largeIcon, 'icon-no-style': element.style === false }">
+					<div class="icon group relative"
+					     :class="{ 'icon-large': largeIcon, 'icon-larger': largerIcon, 'icon-no-style': element.style === false }">
 						<span
 						    v-if="!element.locked"
 						    class="icon-delete"
@@ -28,6 +30,25 @@
 					</div>
 				</div>
 
+				<div v-else-if="element.svgName" class="flex-initial">
+					<div class="icon group relative"
+					     :class="{ 'icon-large': largeIcon, 'icon-larger': largerIcon, 'icon-no-style': element.style === false }">
+						<span
+						    v-if="!element.locked"
+						    class="icon-delete"
+						    v-on:click="doDelete(element.id)">
+							<svg xmlns="http://www.w3.org/2000/svg"
+							     class="fill-current w-3 h-3" viewBox="0 0 16 16">
+								<path
+								    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+							</svg>
+						</span>
+
+						<img :src="element.svgName" class="fill-current w-full h-full"
+						     alt="SVG Icon"/>
+					</div>
+				</div>
+
 				<div v-else-if="element.raw" class="flex-initial">
 					<div class="group relative">
 						<span
@@ -41,7 +62,7 @@
 						</span>
 
 						<span
-						     v-html="element.raw"></span>
+						    v-html="element.raw"></span>
 					</div>
 				</div>
 
@@ -79,24 +100,33 @@
 
 		<div class="icon-drawer w-16 mx-auto" :class="{ 'w-32': largeIcon }">
 			<div class="w-auto flex flex-row flex-wrap gap-x-2">
-				<div v-for="icon in availableIcons" class="icon-small tooltip" :tool-tips="'Add ' + icon.name"
+				<div v-for="icon in availableIcons" class="icon-small tooltip"
+				     :tool-tips="'Add ' + icon.name"
 				     @click="add(icon.id)"
 				     :class="{ 'opacity-25': !canAdd(icon.id) }">
-					<svg xmlns="http://www.w3.org/2000/svg"
-					     class="fill-current w-full h-full"
-					     viewBox="0 0 16 16" v-html="icon.svg"></svg>
+					<template v-if="icon.svg">
+						<svg xmlns="http://www.w3.org/2000/svg"
+						     class="fill-current w-full h-full"
+						     viewBox="0 0 16 16" v-html="icon.svg"></svg>
+					</template>
+					<template v-else-if="icon.svgName">
+						<img :src="icon.svgName" class="fill-current w-full h-full"
+						     alt="SVG Icon"/>
+					</template>
+					<template v-else-if="icon.smallRaw">
+						<span
+						    v-html="icon.smallRaw" class="w-auto"></span>
+					</template>
+
+
 				</div>
-				<div v-if="annotate" class="icon-small tooltip" tool-tips="Add Annotation" @click="annotation()">
-					<svg xmlns="http://www.w3.org/2000/svg"
-					     class="fill-current w-full h-full"
-					     viewBox="0 0 16 16">
-						<path
-						    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-						<path fill-rule="evenodd"
-						      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-					</svg>
+				<div v-if="annotate" class="icon-small tooltip" tool-tips="Add Annotation"
+				     @click="annotation()">
+					<img src="svgs/icon-addBlank.svg" class="fill-current w-full h-full"
+						     alt="SVG Icon"/>
 				</div>
-				<div v-if="spacer" class="icon-small tooltip" tool-tips="Add Spacer" @click="addSpacer()">
+				<div v-if="spacer" class="icon-small tooltip" tool-tips="Add Spacer"
+				     @click="addSpacer()">
 					<svg xmlns="http://www.w3.org/2000/svg"
 					     class="fill-current w-full h-full"
 					     viewBox="0 0 16 16">
@@ -135,6 +165,10 @@ export default {
 			default: []
 		},
 		largeIcon: {
+			type: Boolean,
+			default: false
+		},
+		largerIcon: {
 			type: Boolean,
 			default: false
 		},
@@ -206,7 +240,7 @@ export default {
 			console.log(this.icons);
 			this.icons.push(
 			    {
-				    'id': this.icons+1,
+				    'id': this.icons + 1,
 				    'text': "Click Here to Edit."
 			    }
 			);
@@ -215,15 +249,13 @@ export default {
 		addSpacer() {
 			this.icons.push(
 			    {
-				    'id': this.icons+1,
+				    'id': this.icons + 1,
 				    'spacer': 16
 			    }
 			);
 		},
 	},
-	computed: {
-
-	}
+	computed: {}
 }
 </script>
 

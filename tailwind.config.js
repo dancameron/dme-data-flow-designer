@@ -14,7 +14,6 @@ module.exports = {
                 DEFAULT: '#06bbb8',
                 'light': '#07d0cc',
                 'dark': '#0b585e'
-
             },
         },
         extend: {},
