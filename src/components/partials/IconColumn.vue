@@ -122,7 +122,7 @@
 				</div>
 				<div v-if="annotate" class="icon-small tooltip" tool-tips="Add Annotation"
 				     @click="annotation()">
-					<img src="svgs/icon-addBlank.svg" class="fill-current w-full h-full"
+					<img :src="'svgs/icon-addBlank.svg'" class="fill-current w-full h-full"
 						     alt="SVG Icon"/>
 				</div>
 				<div v-if="spacer" class="icon-small tooltip" tool-tips="Add Spacer"

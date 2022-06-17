@@ -266,8 +266,6 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 					     ring-offset-gray-50 ring-gray-100">
 
 				</div>
-				TODO: Show Image and Download Button
-
 				<p>
 					Testing Info:
 				</p>
@@ -288,7 +286,8 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 
 <script>
 
-import domtoimage from "dom-to-image-more";
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 export default {
 	name: 'DME App',
@@ -322,7 +321,7 @@ export default {
 					return this.currentStep = 2;
 				}
 				this.capturing = true;
-				domtoimage
+				htmlToImage
 				    .toPng(document.getElementById('slide-design'), {filter: this.filterForDomImage})
 				    .then((dataUrl) => {
 					    this.setImage(dataUrl);

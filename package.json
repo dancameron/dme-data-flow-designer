@@ -7,7 +7,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "dom-to-image-more": "^2.10.1",
+    "html-to-image": "^1.9.0",
     "vue": "^3.2.25",
     "vuedraggable": "^4.1.0"
   },
