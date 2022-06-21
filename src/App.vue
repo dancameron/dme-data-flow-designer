@@ -6,7 +6,10 @@ import ManufacturersColumn from "./components/ManufacturersColumn.vue";
 import FilteringStorageColumn from "./components/FilteringStorageColumn.vue";
 import AnalyticsQueryingColumn from "./components/AnalyticsQueryingColumn.vue";
 import DividerArrow from "./components/partials/DividerArrow.vue";
-import NavigationStep from "./components/partials/NavigationStep.vue";</script>
+import NavigationStep from "./components/partials/NavigationStep.vue";
+import logo from './assets/icons/logo.webp'
+import sensorLogo from './assets/icons/sensor-logo.webp'
+</script>
 <template>
 
 	<main id="app-wrap" class="relative min-h-screen">
@@ -14,7 +17,7 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 		<header>
 			<div class="flex gap-4 my-8">
 				<div class="flex-none">
-					<img src="public/icons/sensor-logo.webp" alt="Sensor Data Integrations Logo"
+					<img :src="sensorLogo" alt="Sensor Data Integrations Logo"
 					     class="w-14 h-auto">
 				</div>
 				<div
@@ -23,7 +26,7 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 				</div>
 				<div
 				    class="flex-none">
-					<img src="public/icons/logo.webp" alt="Digital Medicine Society Logo"
+					<img :src="logo" alt="Digital Medicine Society Logo"
 					     class="w-14 h-auto">
 				</div>
 			</div>
@@ -57,7 +60,7 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 		<div class="fixed bottom-0 left-0 w-full z-50 opacity-80 hover:opacity-100">
 			<div class="hide-from-image bg-white py-4 h-full shadow">
 				<div class="flex flex-initial gap-4 justify-center">
-					<button @click="stepNav(this.currentStep-1)" :disabled="currentStep === 1"
+					<button @click="stepNav('back')" :disabled="currentStep === 1"
 					        class="bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand disabled:opacity-50 disabled:bg-gray-300">
 						Back
 					</button>
@@ -68,7 +71,7 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 						</a>
 					</template>
 					<template v-else>
-						<button @click="stepNav(this.currentStep+1)"
+						<button @click="stepNav('forward')"
 						        class="bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand disabled:opacity-50 disabled:bg-gray-300">
 							Continue
 						</button>
@@ -96,13 +99,13 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 					your team and partners.</p>
 				<div class="flex gap-12">
 					<div class="flex grow items-center justify-center">
-						<img src="public/icons/sensor-logo.webp"
+						<img :src="sensorLogo"
 						     alt="Sensor Data Integrations Logo"
 						     class="w-32 h-auto">
 					</div>
 					<div
 					    class="flex grow items-center justify-center">
-						<img src="public/icons/logo.webp" alt="Digital Medicine Society Logo"
+						<img :src="logo" alt="Digital Medicine Society Logo"
 						     class="w-32 h-auto">
 					</div>
 				</div>
@@ -313,14 +316,14 @@ import NavigationStep from "./components/partials/NavigationStep.vue";</script>
 			<div id="slide-design" class="h-full px-12 bg-gray-50" v-if="currentStep === 3">
 				<div class="flex gap-4 py-8">
 					<div class="flex-end">
-						<img src="public/icons/sensor-logo.webp"
+						<img :src="sensorLogo"
 						     alt="Sensor Data Integrations Logo"
 						     class="w-10 h-auto">
 					</div>
 					<div class="grow flex"></div>
 					<div
 					    class="flex-end">
-						<img src="public/icons/logo.webp" alt="Digital Medicine Society Logo"
+						<img :src="logo" alt="Digital Medicine Society Logo"
 						     class="w-10 h-auto">
 					</div>
 				</div>
@@ -407,6 +410,12 @@ export default {
 			return true;
 		},
 		stepNav: function (step) {
+			if (step ==='back') {
+				step = this.currentStep-1;
+			}
+			if (step === 'forward') {
+				step = this.currentStep+1;
+			}
 			if (step === 4) {
 				if (this.currentStep === 1) {
 					return this.currentStep = 2;
