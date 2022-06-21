@@ -25,7 +25,7 @@ export default {
 					name: "Smart Hub",
 					id: 1,
 					single: true,
-					svg: 'svgs/icon-smartHub.svg',
+					svgName: 'svgs/icon-smartHub.svg',
 				},
 			]
 		};
