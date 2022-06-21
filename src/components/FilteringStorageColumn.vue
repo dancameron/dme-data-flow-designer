@@ -2,7 +2,7 @@
 import IconColumn from "./partials/IconColumn.vue";</script>
 <template>
 	<div>
-		<IconColumn :defaultIcons="defaultIcons" :availableIcons="defaultIcons" :limit="1" :title="title" :pluralTitle="pluralTitle" :sortable="false"/>
+		<IconColumn :defaultIcons="defaultIcons" :availableIcons="defaultIcons" :limit="1" :title="title" :pluralTitle="pluralTitle" :sortable="false" storageId="fs"/>
 	</div>
 </template>
 

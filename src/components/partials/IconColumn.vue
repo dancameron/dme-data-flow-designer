@@ -1,7 +1,7 @@
 <template>
 	<div class="h-full mx-2">
 
-		<header class="w-16 h-20 font-bold mx-auto text-center" :class="{ 'w-32': largeIcon }">
+		<header class="w-16 h-20 font-bold mx-auto text-center" :class="{ 'w-16': largeIcon }">
 			<template v-if="icons.length < 2">{{ title }}</template>
 			<template v-else>{{ pluralTitle }}</template>
 		</header>
@@ -10,7 +10,7 @@
 		           :sort="sortable">
 			<template #item="{element}">
 
-				<div v-if="element.svg" class="flex-initial">
+				<div v-if="element.svg" class="flex-initial tooltip ico-tt" :tool-tips="element.name">
 					<div class="icon group relative"
 					     :class="{ 'icon-large': largeIcon, 'icon-larger': largerIcon, 'icon-no-style': element.style === false }">
 						<span
@@ -30,7 +30,8 @@
 					</div>
 				</div>
 
-				<div v-else-if="element.svgName" class="flex-initial">
+				<div v-else-if="element.svgName" class="flex-initial tooltip ico-tt"
+				     :tool-tips="element.name">
 					<div class="icon group relative"
 					     :class="{ 'icon-large': largeIcon, 'icon-larger': largerIcon, 'icon-no-style': element.style === false }">
 						<span
@@ -49,7 +50,8 @@
 					</div>
 				</div>
 
-				<div v-else-if="element.raw" class="flex-initial">
+				<div v-else-if="element.raw" class="flex-initial tooltip ico-tt"
+				     :tool-tips="element.name">
 					<div class="group relative">
 						<span
 						    class="icon-delete"
@@ -67,7 +69,7 @@
 				</div>
 
 				<div v-else-if="element.text"
-				     class="annotation group relative w-auto">
+				     class="annotation group relative w-auto tooltip ico-tt" tool-tips="Annotation">
 					<span
 					    class="absolute -top-2 -left-2 invisible group-hover:visible cursor-pointer rounded-full bg-red-500 text-red-50 p-1"
 					    v-on:click="doDelete(element.id)">
@@ -84,7 +86,8 @@
 				</div>
 
 				<div v-else-if="element.spacer"
-				     class="spacer group relative w-auto cursor-row-resize">
+				     class="spacer group relative w-auto cursor-row-resize tooltip ico-tt"
+				     tool-tips="Invisible Spacer">
 					<span
 					    class="absolute -top-2 -left-2 invisible group-hover:visible cursor-pointer rounded-full bg-red-500 text-red-50 p-1"
 					    v-on:click="doDelete(element.id)">
@@ -98,7 +101,9 @@
 			</template>
 		</draggable>
 
-		<div class="icon-drawer w-16 mx-auto" :class="{ 'w-32': largeIcon }">
+		<div
+		    class="icon-drawer hide-from-image w-28 mx-auto bg-white rounded-md py-1 border border-transparent rounded-sm shadow-sm ring-4 ring-offset-2 ring-offset-gray-50 ring-gray-200"
+		    :class="{ 'w-16': largeIcon }">
 			<div class="w-auto flex flex-row flex-wrap gap-x-2">
 				<div v-for="icon in availableIcons" class="icon-small tooltip"
 				     :tool-tips="'Add ' + icon.name"
@@ -123,7 +128,7 @@
 				<div v-if="annotate" class="icon-small tooltip" tool-tips="Add Annotation"
 				     @click="annotation()">
 					<img :src="'svgs/icon-addBlank.svg'" class="fill-current w-full h-full"
-						     alt="SVG Icon"/>
+					     alt="SVG Icon"/>
 				</div>
 				<div v-if="spacer" class="icon-small tooltip" tool-tips="Add Spacer"
 				     @click="addSpacer()">
@@ -152,6 +157,10 @@ export default {
 		draggable
 	},
 	props: {
+		storageId: {
+			type: String,
+			default: 'error'
+		},
 		annotate: {
 			type: Boolean,
 			default: true
@@ -219,8 +228,6 @@ export default {
 		},
 		canAdd(id) {
 			let index = this.icons.findIndex(item => item.id === id);
-			console.log(this.icons.length)
-			console.log(this.limit)
 			if (this.limit <= this.icons.filter((obj) => obj.svg).length) {
 				return false;
 			}
@@ -244,7 +251,6 @@ export default {
 				    'text': "Click Here to Edit."
 			    }
 			);
-			console.log(this.icons);
 		},
 		addSpacer() {
 			this.icons.push(
@@ -255,7 +261,24 @@ export default {
 			);
 		},
 	},
-	computed: {}
+	mounted() {
+		let storageId = 'dme_' + this.storageId;
+		console.log(storageId);
+		if (localStorage.getItem(storageId) ) {
+			this.icons = JSON.parse(localStorage.getItem(storageId)) || [];
+		}
+	},
+	watch: {
+		icons: {
+			handler(icons) {
+				let storageId = 'dme_' + this.storageId;
+				console.log(storageId);
+				console.log(icons)
+				localStorage.setItem(storageId, JSON.stringify(icons));
+			},
+			deep: true
+		}
+	}
 }
 </script>
 

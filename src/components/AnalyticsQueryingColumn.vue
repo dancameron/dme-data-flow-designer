@@ -3,7 +3,7 @@ import IconColumn from "./partials/IconColumn.vue";
 </script>
 <template>
 	<div>
-		<IconColumn :defaultIcons="defaultIcons" :availableIcons="defaultIcons" :largerIcon="true" :limit="1"  :title="title" :pluralTitle="pluralTitle" />
+		<IconColumn :defaultIcons="defaultIcons" :availableIcons="defaultIcons" :largerIcon="true" :limit="1"  :title="title" :pluralTitle="pluralTitle" storageId="aq" />
 	</div>
 </template>
 

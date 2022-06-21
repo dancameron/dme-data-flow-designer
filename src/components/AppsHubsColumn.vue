@@ -3,7 +3,7 @@ import IconColumn from "./partials/IconColumn.vue";
 </script>
 <template>
 	<div>
-		<IconColumn :availableIcons="availableIcons" :annotate="true"  :title="title" :pluralTitle="pluralTitle" />
+		<IconColumn :availableIcons="availableIcons" :annotate="true"  :title="title" :pluralTitle="pluralTitle" storageId="ah" />
 	</div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
 					name: "Smart Hub",
 					id: 1,
 					single: true,
-					svgName: 'svgs/icon-smartHub.svg',
+					svg: 'svgs/icon-smartHub.svg',
 				},
 			]
 		};
