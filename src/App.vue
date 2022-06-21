@@ -471,5 +471,20 @@ export default {
 			return 'upcoming'
 		}
 	},
+	mounted() {
+		let storageId = 'dme_columns';
+		if (localStorage.getItem(storageId) ) {
+			this.columnOptions = JSON.parse(localStorage.getItem(storageId)) || [];
+		}
+	},
+	watch: {
+		columnOptions: {
+			handler(icons) {
+				let storageId = 'dme_columns';
+				localStorage.setItem(storageId, JSON.stringify(icons));
+			},
+			deep: true
+		}
+	}
 }
 </script>

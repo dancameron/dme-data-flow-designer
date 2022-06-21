@@ -1,7 +1,7 @@
 <template>
 	<div class="h-full mx-2">
 
-		<header class="w-16 h-20 font-bold mx-auto text-center" :class="{ 'w-16': largeIcon }">
+		<header class="w-16 h-16 font-bold mx-auto text-center" :class="{ 'w-16': largeIcon }">
 			<template v-if="icons.length < 2">{{ title }}</template>
 			<template v-else>{{ pluralTitle }}</template>
 		</header>
