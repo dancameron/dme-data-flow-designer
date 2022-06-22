@@ -17,8 +17,8 @@ export default {
 	},
 	data() {
 		return {
-			title: 'Analytics and Querying',
-			pluralTitle: 'Analytics and Querying',
+			title: 'Analytics & Querying',
+			pluralTitle: 'Analytics & Querying',
 			defaultIcons: [
 				{
 					name: "CPU",

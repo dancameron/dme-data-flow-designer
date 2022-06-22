@@ -8,8 +8,7 @@ import AnalyticsQueryingColumn from "./components/AnalyticsQueryingColumn.vue";
 import DividerArrow from "./components/partials/DividerArrow.vue";
 import NavigationStep from "./components/partials/NavigationStep.vue";
 import logo from './assets/icons/logo.webp'
-import sensorLogo from './assets/icons/sensor-logo.webp'
-</script>
+import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 <template>
 
 	<main id="app-wrap" class="relative min-h-screen">
@@ -21,7 +20,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'
 					     class="w-14 h-auto">
 				</div>
 				<div
-				    class="grow flex items-center justify-center text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+				    class="grow flex items-center justify-center text-2xl font-bold leading-7 text-gray-900 sm:text-3xl">
 					Sensor Data Flow Design Tool
 				</div>
 				<div
@@ -50,18 +49,18 @@ import sensorLogo from './assets/icons/sensor-logo.webp'
 					                @click="stepNav(3)"/>
 					<NavigationStep :status="stepStatus(4)" title="Finish"
 					                desc="Download your customized slide." :step="4"
-					                @click="stepNav(4)"/>
+					                @click="stepNav(4)" :spinner="capturing"/>
 
 				</ol>
 			</nav>
 		</div>
 
 
-		<div class="fixed bottom-0 left-0 w-full z-50 opacity-80 hover:opacity-100">
-			<div class="hide-from-image bg-white py-4 h-full shadow">
+		<div class="fixed bottom-0 left-0 w-full z-50">
+			<div class="hide-from-image bg-brand py-4 h-full shadow border-t-2 border-brand-dark">
 				<div class="flex flex-initial gap-4 justify-center">
 					<button @click="stepNav('back')" :disabled="currentStep === 1"
-					        class="bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand disabled:opacity-50 disabled:bg-gray-300">
+					        class="bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-dark focus:outline-none ring-brand-dark ring-2 ring-offset-2 ring-offset-brand disabled:opacity-50 disabled:bg-brand disabled:ring-0">
 						Back
 					</button>
 					<template v-if="currentStep === 4">
@@ -72,7 +71,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'
 					</template>
 					<template v-else>
 						<button @click="stepNav('forward')"
-						        class="bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand disabled:opacity-50 disabled:bg-gray-300">
+						        class="bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-dark focus:outline-none ring-2 ring-offset-2 ring-offset-brand-light ring-brand-dark disabled:opacity-50 disabled:bg-gray-300">
 							Continue
 						</button>
 					</template>
@@ -80,7 +79,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'
 			</div>
 		</div>
 
-		<div class="h-full" style="min-height:100vh">
+		<div class="h-full pb-32 border-t border-gray-50" style="min-height:100vh">
 
 			<div class="py-16 px-12 bg-gray-50" v-if="currentStep === 1">
 				<h1>
@@ -345,31 +344,34 @@ import sensorLogo from './assets/icons/sensor-logo.webp'
 					Data Design Flow Tool</p>
 			</div>
 
-			<div v-if="currentStep === 4" class="py-16 px-12">
-				<div class="text-right">
+			<div v-if="currentStep === 4" class="py-4 px-12">
+				<div class="flex flex-row-reverse gap-2 items-center mb-6">
+
+
+					<button @click="stepNav(4)" class="text-gray-400 text-xs tooltip" :tool-tips="'Click to refresh image'">
+						<svg xmlns="http://www.w3.org/2000/svg"
+						     fill="currentColor" class="w-6 h-6"
+						     :class="{'animate-spin': capturing}"
+						     viewBox="0 0 16 16">
+						  <path fill-rule="evenodd"
+						        d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+						  <path
+						      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+						</svg>
+					</button>
 
 					<a
 					    :href="generatedImage"
 					    download="DiMe-Sensor-Data-Design-Flow.png"
-					    class="mb-6 no-underline bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand">
+					    class="no-underline bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand">
 						Download your sensor data flow
 					</a>
 
-					<img :src="generatedImage" alt="Your DME Image" class="border
+				</div>
+
+				<img :src="generatedImage" alt="Your DME Image" class="border
 					     border-gray-200 rounded-sm shadow-sm ring-4 ring-offset-2
 					     ring-offset-gray-50 ring-gray-100">
-
-				</div>
-				<p>
-					Testing Info:
-				</p>
-				<p>
-
-					{{ currentStep }}
-					{{ shownInfo }}
-					{{ columnOptions }}
-
-				</p>
 			</div>
 		</div>
 
@@ -381,7 +383,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'
 <script>
 
 import * as htmlToImage from 'html-to-image';
-import {toPng, toJpeg, toBlob, toPixelData, toSvg} from 'html-to-image';
+import {toPng} from 'html-to-image';
 
 export default {
 	name: 'DME App',
@@ -410,11 +412,11 @@ export default {
 			return true;
 		},
 		stepNav: function (step) {
-			if (step ==='back') {
-				step = this.currentStep-1;
+			if (step === 'back') {
+				step = this.currentStep - 1;
 			}
 			if (step === 'forward') {
-				step = this.currentStep+1;
+				step = this.currentStep + 1;
 			}
 			if (step === 4) {
 				if (this.currentStep === 1) {
@@ -423,20 +425,26 @@ export default {
 				if (this.currentStep === 2) {
 					return this.currentStep = 3;
 				}
+				this.currentStep = 3;
 				this.capturing = true;
-				htmlToImage
-				    .toPng(document.getElementById('slide-design'), {filter: this.filterForDomImage})
-				    .then((dataUrl) => {
-					    this.setImage(dataUrl);
-					    this.capturing = false;
-					    this.currentStep = 4;
-				    })
-				    .catch(function (error) {
-					    console.error('oops, something went wrong!', error);
-				    });
-				return;
+				setTimeout(function () {
+					htmlToImage
+					    .toPng(document.getElementById('slide-design'), {
+						    filter: this.filterForDomImage,
+						    cacheBust: true
+					    })
+					    .then((dataUrl) => {
+						    this.setImage(dataUrl);
+						    this.capturing = false;
+						    this.currentStep = 4;
+					    })
+					    .catch(function (error) {
+						    console.error('oops, something went wrong!', error);
+					    });
+				}.bind(this), 1000)
+			} else {
+				this.currentStep = step
 			}
-			this.currentStep = step
 		},
 		isColumnShown: function (columnKey) {
 			console.log(this.columnOptions.includes(columnKey))
@@ -459,7 +467,12 @@ export default {
 		},
 		stepStatus: function (step) {
 
+			// check if current
 			if (step === this.currentStep) {
+				// last step is complete, not current.
+				if (step === 4) {
+					return 'completed'
+				}
 				return 'current'
 			}
 
@@ -473,7 +486,7 @@ export default {
 	},
 	mounted() {
 		let storageId = 'dme_columns';
-		if (localStorage.getItem(storageId) ) {
+		if (localStorage.getItem(storageId)) {
 			this.columnOptions = JSON.parse(localStorage.getItem(storageId)) || [];
 		}
 	},

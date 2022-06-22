@@ -1,13 +1,27 @@
 <template>
-	<div class="h-full mx-2">
+	<div class="relative h-full mx-2">
 
-		<header class="w-16 h-16 font-bold mx-auto text-center" :class="{ 'w-16': largeIcon }">
+		<header class="w-24 mb-2 font-bold mx-auto text-center">
 			<template v-if="icons.length < 2">{{ title }}</template>
 			<template v-else>{{ pluralTitle }}</template>
 		</header>
 
 		<draggable v-model="icons" item-key="id" class="h-full flex flex-col justify-center mx-auto space-y-4"
 		           :sort="sortable">
+
+			<template #footer>
+				<div class="hide-from-image flex-initial tooltip ico-tt" :tool-tips="'Click to add'">
+					<div class="icon-add group relative" @click="showDrawer()">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+						     class="fill-current w-full h-full" viewBox="0 0 16 16">
+							<path
+							    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+						</svg>
+					</div>
+				</div>
+			</template>
+
+			<!-- Loop over icons -->
 			<template #item="{element}">
 
 				<div v-if="element.svg" class="flex-initial tooltip ico-tt" :tool-tips="element.name">
@@ -102,9 +116,21 @@
 		</draggable>
 
 		<div
-		    class="icon-drawer hide-from-image w-28 mx-auto bg-white rounded-md py-1 border border-transparent rounded-sm shadow-sm ring-4 ring-offset-2 ring-offset-gray-50 ring-gray-200"
+		    v-if="isDrawerShown()"
+		    class="absolute group z-50 top-2/4 left-28 icon-drawer hide-from-image w-40 mx-auto bg-white border border-gray-200 rounded shadow"
 		    :class="{ 'w-16': largeIcon }">
-			<div class="w-auto flex flex-row flex-wrap gap-x-2">
+			<div class="relative w-auto">
+				<p class="text-xs text-center grow mb-2 text-gray-600 bg-gray-100 py-2" v-html="'Add ' + title"></p>
+				<span
+				    class="absolute z-50 transition-opacity ease-in-out delay-75 -top-4 -left-4 opacity-0 group-hover:opacity-100 cursor-pointer rounded-full bg-gray-600 text-white p-0.5 pointer-events-auto"
+				    v-on:click="activeDrawer = false">
+					<svg xmlns="http://www.w3.org/2000/svg"
+					     class="fill-current w-4 h-4" viewBox="0 0 16 16">
+						<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</span>
+
+				<div class="flex flex-row flex-wrap gap-x-2 p-2">
 				<div v-for="icon in availableIcons" class="icon-small tooltip"
 				     :tool-tips="'Add ' + icon.name"
 				     @click="add(icon.id)"
@@ -140,6 +166,8 @@
 						<path
 						    d="M2 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7z"/>
 					</svg>
+				</div>
+
 				</div>
 
 			</div>
@@ -204,10 +232,17 @@ export default {
 	},
 	data() {
 		return {
+			activeDrawer: false,
 			icons: [...this.defaultIcons]
 		};
 	},
 	methods: {
+		isDrawerShown: function () {
+			return this.activeDrawer;
+		},
+		showDrawer: function () {
+			this.activeDrawer = true;
+		},
 		add: function (id) {
 			if (!this.canAdd(id)) {
 				console.log('method says no!')
@@ -218,6 +253,7 @@ export default {
 			this.icons.push(
 			    this.availableIcons[index]
 			);
+			this.activeDrawer = false;
 		},
 		doDelete(id) {
 			let index = this.icons.findIndex(item => item.id === id);
@@ -251,6 +287,7 @@ export default {
 				    'text': "Click Here to Edit."
 			    }
 			);
+			this.activeDrawer = false;
 		},
 		addSpacer() {
 			this.icons.push(
@@ -259,12 +296,13 @@ export default {
 				    'spacer': 16
 			    }
 			);
+			this.activeDrawer = false;
 		},
 	},
 	mounted() {
 		let storageId = 'dme_' + this.storageId;
 		console.log(storageId);
-		if (localStorage.getItem(storageId) ) {
+		if (localStorage.getItem(storageId)) {
 			this.icons = JSON.parse(localStorage.getItem(storageId)) || [];
 		}
 	},
