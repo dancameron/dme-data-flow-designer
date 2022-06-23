@@ -9,6 +9,8 @@ import IconColumn from "./partials/IconColumn.vue";
 
 <script>
 import draggable from "vuedraggable";
+import svg1  from './../assets/svgs/icon-dataProcessing.svg?raw';
+import svg2  from './../assets/svgs/icon-server.svg?raw';
 
 export default {
 	name: 'ManufacturerServer',
@@ -24,13 +26,13 @@ export default {
 					name: "Data Processing",
 					id: 0,
 					single: true,
-					svgName: 'svgs/icon-dataProcessing.svg'
+					svg: svg1
 				},
 				{
 					name: "Server",
 					id: 1,
 					single: true,
-					svgName: 'svgs/icon-server.svg'
+					svg: svg2
 				}
 			]
 		};

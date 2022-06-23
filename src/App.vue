@@ -16,8 +16,9 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 		<header>
 			<div class="flex gap-4 my-8">
 				<div class="flex-none">
-					<img :src="sensorLogo" alt="Sensor Data Integrations Logo"
-					     class="w-14 h-auto">
+					<a href="https://www.dimesociety.org/tours-of-duty/sensor-data-integrations/data-architecture/#data-flow-design-tool"><img
+					    :src="sensorLogo" alt="Sensor Data Integrations Logo"
+					    class="h-14 w-auto"></a>
 				</div>
 				<div
 				    class="grow flex items-center justify-center text-2xl font-bold leading-7 text-gray-900 sm:text-3xl">
@@ -25,8 +26,9 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 				</div>
 				<div
 				    class="flex-none">
-					<img :src="logo" alt="Digital Medicine Society Logo"
-					     class="w-14 h-auto">
+					<a href="https://www.dimesociety.org/"><img
+					    :src="logo" alt="Digital Medicine Society Logo"
+					    class="h-14 w-auto"></a>
 				</div>
 			</div>
 		</header>
@@ -57,16 +59,40 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 
 
 		<div class="fixed bottom-0 left-0 w-full z-50">
-			<div class="hide-from-image bg-brand py-4 h-full shadow border-t-2 border-brand-dark">
+			<div class="hide-from-image bg-gray-100 py-4 h-full shadow border-t-2 border-gray-200">
+
+				<div class="absolute left-2 h-8 py-1 px-4">
+					<svg xmlns="http://www.w3.org/2000/svg"
+					     fill="currentColor" class="h-4 w-auto inline text-gray-300 pr-1"
+					     viewBox="0 0 16 16">
+						<path
+						    d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+					</svg>
+					<a href="https://www.google.com/forms/about/" target="_blank"
+					   class="no-underline text-sm font-medium text-gray-300 hover:underline hover:text-gray-400">Return
+						to DiMe SDI Page</a>
+				</div>
+
+				<div class="absolute right-2 h-8 py-2 px-4">
+					<div class="flex flex-row-reverse gap-6">
+						<img :src="logo" alt="Digital Medicine Society Logo"
+						     class="h-6 w-auto">
+						<img :src="sensorLogo"
+						     alt="Sensor Data Integrations Logo"
+						     class="h-6 w-auto">
+					</div>
+				</div>
+
 				<div class="flex flex-initial gap-4 justify-center">
 					<button @click="stepNav('back')" :disabled="currentStep === 1"
-					        class="bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-dark focus:outline-none ring-brand-dark ring-2 ring-offset-2 ring-offset-brand disabled:opacity-50 disabled:bg-brand disabled:ring-0">
+					        class="bg-gray-300 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-400 focus:outline-none ring-gray-300 ring-2 ring-offset-2 ring-offset-white disabled:opacity-50 disabled:bg-gray-100 disabled:ring-0">
 						Back
 					</button>
 					<template v-if="currentStep === 4">
-						<a href="https://www.google.com/forms/about/" target="_blank"
-						   class="bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand disabled:opacity-50 disabled:bg-gray-300">
-							Submit Case Study
+						<a href="https://www.dimesociety.org/tours-of-duty/sensor-data-integrations/data-architecture/#data-flow-design-tool"
+						   target="_blank"
+						   class="bg-brand no-underline border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none ring-2 ring-brand-light">
+							Tell us how you used the tool
 						</a>
 					</template>
 					<template v-else>
@@ -88,7 +114,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 					<span
 					    class="mt-2 block text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">DiMe Sensor Data Flow Design Tool</span>
 				</h1>
-				<p class="my-8 text-xl text-gray-500 leading-8">
+				<p class="my-12 text-xl text-gray-500 leading-8">
 					Using this tool you can map
 					the flow of sensor data from any connected sensor technology you choose through
 					to a final data set for analytics and querying, whether within a care delivery
@@ -100,12 +126,12 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 					<div class="flex grow items-center justify-center">
 						<img :src="sensorLogo"
 						     alt="Sensor Data Integrations Logo"
-						     class="w-32 h-auto">
+						     class="h-32 w-auto">
 					</div>
 					<div
 					    class="flex grow items-center justify-center">
 						<img :src="logo" alt="Digital Medicine Society Logo"
-						     class="w-32 h-auto">
+						     class="h-32 w-auto">
 					</div>
 				</div>
 			</div>
@@ -277,7 +303,8 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 										    href="https://docs.google.com/presentation/d/1vBEa_ZBhutOCAVVZ2z5Qq8xG2uQ3y2B61LwMUQPJnmw/edit#slide=id.gccf2994462_0_1265"
 										    target="_blank">here</a> in <a
 										    href="https://playbook.dimesociety.org/"
-										    target="_blank">The Playbook</a>.
+										    target="_blank" class="italic">The
+											Playbook</a>.
 									</li>
 								</ul>
 							</div>
@@ -313,31 +340,25 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 			</fieldset>
 
 			<div id="slide-design" class="h-full px-12 bg-gray-50" v-if="currentStep === 3">
-				<div class="flex gap-4 py-8">
-					<div class="flex-end">
-						<img :src="sensorLogo"
-						     alt="Sensor Data Integrations Logo"
-						     class="w-10 h-auto">
-					</div>
-					<div class="grow flex"></div>
-					<div
-					    class="flex-end">
-						<img :src="logo" alt="Digital Medicine Society Logo"
-						     class="w-10 h-auto">
-					</div>
+				<div class="flex flex-row-reverse gap-6 py-8">
+					<img :src="logo" alt="Digital Medicine Society Logo"
+					     class="h-10 w-auto">
+					<img :src="sensorLogo"
+					     alt="Sensor Data Integrations Logo"
+					     class="h-10 w-auto">
 				</div>
 				<div
 				    class="grid grid-flow-col auto-cols-max justify-evenly gap-0">
 					<DigitalSensingProductsColumn/>
-					<DividerArrow v-if="isColumnShown('apphub')"/>
+					<DividerArrow v-if="isColumnShown('apphub')" storageId="arrow-1"/>
 					<AppsHubsColumn v-if="isColumnShown('apphub')"/>
-					<DividerArrow v-if="isColumnShown('manufacturer')"/>
+					<DividerArrow v-if="isColumnShown('manufacturer')" storageId="arrow-2"/>
 					<ManufacturersColumn class="col-span-2" v-if="isColumnShown('manufacturer')"/>
-					<DividerArrow/>
+					<DividerArrow storageId="arrow-3"/>
 					<CentralizedColumn class="col-span-2"/>
-					<DividerArrow/>
+					<DividerArrow storageId="arrow-4"/>
 					<FilteringStorageColumn/>
-					<DividerArrow v-if="isColumnShown('analytics')"/>
+					<DividerArrow v-if="isColumnShown('analytics')" storageId="arrow-5"/>
 					<AnalyticsQueryingColumn v-if="isColumnShown('analytics')"/>
 				</div>
 				<p class="pt-8 pb-8 text-sm text-right">Sensor data flow designed using DiMe’s Sensor
@@ -348,22 +369,23 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 				<div class="flex flex-row-reverse gap-2 items-center mb-6">
 
 
-					<button @click="stepNav(4)" class="text-gray-400 text-xs tooltip" :tool-tips="'Click to refresh image'">
+					<button @click="stepNav(4)" class="text-gray-400 text-xs tooltip"
+					        :tool-tips="'Click to refresh image'">
 						<svg xmlns="http://www.w3.org/2000/svg"
 						     fill="currentColor" class="w-6 h-6"
 						     :class="{'animate-spin': capturing}"
 						     viewBox="0 0 16 16">
-						  <path fill-rule="evenodd"
-						        d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-						  <path
-						      d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+							<path fill-rule="evenodd"
+							      d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+							<path
+							    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
 						</svg>
 					</button>
 
 					<a
 					    :href="generatedImage"
 					    download="DiMe-Sensor-Data-Design-Flow.png"
-					    class="no-underline bg-brand border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand">
+					    class="bg-brand no-underline border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none ring-2 ring-brand-light">
 						Download your sensor data flow
 					</a>
 
@@ -441,7 +463,7 @@ export default {
 					    .catch(function (error) {
 						    console.error('oops, something went wrong!', error);
 					    });
-				}.bind(this), 1000)
+				}.bind(this), 500)
 			} else {
 				this.currentStep = step
 			}

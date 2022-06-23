@@ -8,6 +8,8 @@ import IconColumn from "./partials/IconColumn.vue";
 </template>
 
 <script>
+import svg1  from './../assets/svgs/icon-app.svg?raw';
+import svg2  from './../assets/svgs/icon-smartHub.svg?raw';
 export default {
 	name: 'AppsHubs',
 	data() {
@@ -19,13 +21,13 @@ export default {
 					name: "App",
 					id: 0,
 					single: true,
-					svgName: 'svgs/icon-app.svg',
+					svg: svg1
 				},
 				{
 					name: "Smart Hub",
 					id: 1,
 					single: true,
-					svgName: 'svgs/icon-smartHub.svg',
+					svg: svg2
 				},
 			]
 		};

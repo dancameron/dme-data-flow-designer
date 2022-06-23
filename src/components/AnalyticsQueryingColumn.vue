@@ -9,6 +9,7 @@ import IconColumn from "./partials/IconColumn.vue";
 
 <script>
 import draggable from "vuedraggable";
+import svg1  from './../assets/svgs/analytics.svg?raw';
 
 export default {
 	name: 'AnalyticsQuerying',
@@ -24,7 +25,7 @@ export default {
 					name: "CPU",
 					id: 0,
 					single: true,
-					svgName: 'svgs/analytics.svg'
+					svg:svg1
 				},
 			]
 		};

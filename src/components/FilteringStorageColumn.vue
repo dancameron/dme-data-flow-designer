@@ -8,6 +8,8 @@ import IconColumn from "./partials/IconColumn.vue";</script>
 
 <script>
 import draggable from "vuedraggable";
+import svg1  from './../assets/svgs/icon-serverTraffic.svg?raw';
+import svg2  from './../assets/svgs/icon-laptop.svg?raw';
 
 export default {
 	name: 'FilteringStorage',
@@ -24,7 +26,7 @@ export default {
 					id: 0,
 					single: true,
 					locked: true,
-					svgName: 'svgs/icon-serverTraffic.svg'
+					svg: svg1
 				},
 				{
 					name: "Arrow Down",
@@ -32,14 +34,14 @@ export default {
 					single: true,
 					style: false,
 					locked: true,
-					svg: '<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>'
+					svg: '<svg xmlns="http://www.w3.org/2000/svg" class="fill-current w-full h-full" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/></svg>'
 				},
 				{
 					name: "Computer",
 					id: 2,
 					single: true,
 					locked: true,
-					svgName: 'svgs/icon-laptop.svg'
+					svg: svg2
 				},
 			]
 		};
