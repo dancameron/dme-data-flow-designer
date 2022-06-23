@@ -122,7 +122,7 @@
 		<div
 		    v-if="isDrawerShown()"
 		    class="absolute group z-50 top-2/4 left-28 icon-drawer hide-from-image w-40 mx-auto bg-white border border-gray-200 rounded shadow"
-		    :class="{ 'left-36': largeIcon, 'left-20 w-16': availableIcons.length < 4  }">
+		    :class="{ 'left-36': largeIcon, 'left-20 w-16': availableIcons.length < 2  }">
 			<div class="relative w-auto">
 				<p v-if="title" class="text-xs text-center grow mb-2 text-gray-600 bg-gray-100 py-2"
 				   v-html="'Add ' + title"></p>
