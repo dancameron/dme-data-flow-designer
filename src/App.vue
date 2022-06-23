@@ -68,7 +68,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 						<path
 						    d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
 					</svg>
-					<a href="https://www.google.com/forms/about/" target="_blank"
+					<a href="https://www.dimesociety.org/tours-of-duty/sensor-data-integrations/data-architecture/#data-flow-design-tool" target="_blank"
 					   class="no-underline text-sm font-medium text-gray-300 hover:underline hover:text-gray-400">Return
 						to DiMe SDI Page</a>
 				</div>
@@ -89,7 +89,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 						Back
 					</button>
 					<template v-if="currentStep === 4">
-						<a href="https://www.dimesociety.org/tours-of-duty/sensor-data-integrations/data-architecture/#data-flow-design-tool"
+						<a href="https://docs.google.com/forms/d/e/1FAIpQLSf6RMacsftNEyic0ui0soUn36-reIUKlr9wOcaYb5mmHdgH8Q/viewform?usp=sf_link"
 						   target="_blank"
 						   class="bg-brand no-underline border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none ring-2 ring-brand-light">
 							Tell us how you used the tool
@@ -433,7 +433,7 @@ export default {
 			if (node.classList) return !node.classList.contains("hide-from-image");
 			return true;
 		},
-		stepNav: function (step) {
+		stepNav: function (step, reRun = true) {
 			if (step === 'back') {
 				step = this.currentStep - 1;
 			}
@@ -459,6 +459,10 @@ export default {
 						    this.setImage(dataUrl);
 						    this.capturing = false;
 						    this.currentStep = 4;
+						    // for safari?!!?
+						    if ( reRun ) {
+							    this.stepNav(4, false)
+						    }
 					    })
 					    .catch(function (error) {
 						    console.error('oops, something went wrong!', error);
