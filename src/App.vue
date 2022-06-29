@@ -68,7 +68,8 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 						<path
 						    d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
 					</svg>
-					<a href="https://www.dimesociety.org/tours-of-duty/sensor-data-integrations/data-architecture/#data-flow-design-tool" target="_blank"
+					<a href="https://www.dimesociety.org/tours-of-duty/sensor-data-integrations/data-architecture/#data-flow-design-tool"
+					   target="_blank"
 					   class="no-underline text-sm font-medium text-gray-300 hover:underline hover:text-gray-400">Return
 						to DiMe SDI Page</a>
 				</div>
@@ -84,10 +85,26 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 				</div>
 
 				<div class="flex flex-initial gap-4 justify-center">
+
+					<template v-if="currentStep === 4">
+						<button @click="clearCache()" class="text-gray-300 hover:text-red-500 text-xs tooltip"
+						        :tool-tips="'Click to restart design'">
+							<svg xmlns="http://www.w3.org/2000/svg"
+							     fill="currentColor" class="w-4 h-4"
+							     viewBox="0 0 16 16">
+								<path
+								    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+								<path fill-rule="evenodd"
+								      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+							</svg>
+						</button>
+					</template>
+
 					<button @click="stepNav('back')" :disabled="currentStep === 1"
 					        class="bg-gray-300 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-400 focus:outline-none ring-gray-300 ring-2 ring-offset-2 ring-offset-white disabled:opacity-50 disabled:bg-gray-100 disabled:ring-0">
 						Back
 					</button>
+
 					<template v-if="currentStep === 4">
 						<a href="https://docs.google.com/forms/d/e/1FAIpQLSf6RMacsftNEyic0ui0soUn36-reIUKlr9wOcaYb5mmHdgH8Q/viewform?usp=sf_link"
 						   target="_blank"
@@ -101,6 +118,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 							Continue
 						</button>
 					</template>
+
 				</div>
 			</div>
 		</div>
@@ -148,30 +166,60 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 							<p>
 								<button @click="showInfo(1)"
 								        class="font-normal text-gray-400 underline hover:text-brand-dark hover:no-underline"
-								        v-if="!isInfoShown(1)">I don't know...
+								        v-if="!isInfoShown(1) && !isInfoShown(1.1)">I’m
+									not sure…
 								</button>
 							</p>
-							<div v-if="isInfoShown(1)" class="mt-3 text-gray-500">
-								<p>
-									To map your sensor data flow, you need to know
-									whether
-									an App or Hub is required to transmit data.
-								</p>
+							<div v-if="isInfoShown(1) || isInfoShown(1.1)"
+							     class="mt-3 text-gray-500">
 								<ul role="list" class="list-disc ml-4">
-									<li>Contact your vendor partner to determine if
-										an App
-										or Hub is required
+									<li>Do you need a smartphone, tablet to make
+										your digital sensing product work? Or,
+										do you need a second device connected to
+										the internet in the home? If so, you
+										probably <b>do
+											require</b> an App or a Hub to
+										transmit data
 									</li>
-									<li>Learn more about the sensor data measurement
-										system
-										starting <a
-										    href="https://docs.google.com/presentation/d/1vBEa_ZBhutOCAVVZ2z5Qq8xG2uQ3y2B61LwMUQPJnmw/edit#slide=id.gccf2994462_0_1265"
-										    target="_blank">here</a> in <a
-										    href="https://playbook.dimesociety.org/"
-										    target="_blank" class="italic">The
-											Playbook</a>.
+									<li>If you don’t need these things to make your
+										digital sensing product work, you
+										probably <b>don’t require</b> an App or
+										a Hub to transmit data
 									</li>
 								</ul>
+								<p class="ml-4 py-2">
+									<button @click="showInfo(1.1)"
+									        class="font-normal text-gray-400 underline hover:text-brand-dark hover:no-underline"
+									        v-if="!isInfoShown(1.1)">I still don't
+										know...
+									</button>
+								</p>
+								<div v-if="isInfoShown(1.1)"
+								     class="ml-4 text-gray-500">
+									<p class="mb-2">
+										To map your sensor data flow, you need
+										to know whether an App or Hub is
+										required to transmit data.
+									</p>
+									<ul role="list" class="list-disc ml-4">
+										<li>Contact your vendor partner to
+											determine if an App or Hub is
+											required
+										</li>
+										<li>Learn more about the sensor
+											data measurement
+											system
+											starting <a
+											    href="https://docs.google.com/presentation/d/1vBEa_ZBhutOCAVVZ2z5Qq8xG2uQ3y2B61LwMUQPJnmw/edit#slide=id.gccf2994462_0_1265"
+											    target="_blank">here</a>
+											in <a
+											    href="https://playbook.dimesociety.org/"
+											    target="_blank"
+											    class="italic">The
+												Playbook</a>.
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 						<div class="flex mt-0.5">
@@ -200,46 +248,70 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 							</div>
 						</div>
 					</div>
-					<div class="flex items-start py-6 mb-2  border-b border-gray-200">
+					<div class="flex items-start py-6">
 						<div class="mr-4 text-sm">
-						<span class="font-medium text-gray-700">
-							Does data generated by your digital sensing product flow through
-							servers belonging to the manufacturer of the measurement tool?
-						</span>
+							<span class="font-medium text-gray-700">
+								Does data generated by your digital sensing product flow through
+								servers belonging to the manufacturer of the measurement tool?
+							</span>
 							<p>
 								<button @click="showInfo(2)"
 								        class="font-normal text-gray-400 underline hover:text-brand-dark hover:no-underline"
-								        v-if="!isInfoShown(2)">I don't know...
+								        v-if="!isInfoShown(2) && !isInfoShown(2.1)">I’m
+									not sure…
 								</button>
 							</p>
-							<div v-if="isInfoShown(2)" class="mt-3 text-gray-500">
-								<p>
-									To map your sensor data flow, you need to know
-									whether
-									the manufacturer of your digital sensing product
-									requires that the data flows through their
-									servers.
-								</p>
+							<div v-if="isInfoShown(2) || isInfoShown(2.1)"
+							     class="mt-3 text-gray-500">
 								<ul role="list" class="list-disc ml-4">
-									<li>
-										Contact your vendor partner to determine
-										if the
-										sensor generated data must flow through
-										the
-										manufacturers’ servers
+									<li>Do you need to log into the manufacturer’s
+										website to access the data from the
+										digital sensing product? If so, data
+										probably <b>does</b> flow through the
+										manufacturer’s servers
+
 									</li>
-									<li>
-										Learn more about the sensor data
-										measurement
-										system
-										starting <a
-									    href="https://docs.google.com/presentation/d/1vBEa_ZBhutOCAVVZ2z5Qq8xG2uQ3y2B61LwMUQPJnmw/edit#slide=id.gccf2994462_0_1265"
-									    target="_blank">here</a> in <a
-									    href="https://playbook.dimesociety.org/"
-									    target="_blank" class="italic">The
-										Playbook</a>.
+									<li>If you can access data directly from the
+										digital sensing product, the data
+										probably <b>does not</b> flow through
+										the manufacturer’s servers
 									</li>
 								</ul>
+								<p class="ml-4 py-2">
+									<button @click="showInfo(2.1)"
+									        class="font-normal text-gray-400 underline hover:text-brand-dark hover:no-underline"
+									        v-if="!isInfoShown(1.1)">I still don't
+										know...
+									</button>
+								</p>
+								<div v-if="isInfoShown(2.1)"
+								     class="ml-4 text-gray-500">
+									<p class="mb-2">
+										To map your sensor data flow, you need
+										to know whether the manufacturer of your
+										digital sensing product requires that
+										the data flows through their servers.
+									</p>
+									<ul role="list" class="list-disc ml-4">
+										<li>
+											Contact your vendor partner to
+											determine if the sensor
+											generated data must flow through
+											the manufacturers’ servers
+										</li>
+										<li>
+											Learn more about the sensor data
+											measurement system starting <a
+										    href="https://docs.google.com/presentation/d/1vBEa_ZBhutOCAVVZ2z5Qq8xG2uQ3y2B61LwMUQPJnmw/edit#slide=id.gccf2994462_0_1265"
+										    target="_blank">here</a> in <a
+										    href="https://playbook.dimesociety.org/"
+										    target="_blank" class="italic">The
+											Playbook</a>.
+										</li>
+									</ul>
+								</div>
+
+
 							</div>
 						</div>
 						<div class="flex mt-0.5">
@@ -269,77 +341,11 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 							</div>
 						</div>
 					</div>
-					<div class="flex items-start py-4 mb-4">
-						<div class="mr-4 text-sm">
-						<span class="font-medium text-gray-700">
-							Does the data consumer perform filtering on the sensor generated
-							data and store the data internally prior to performing analytics
-							on the data and querying it?
-						</span>
-							<p>
-								<button @click="showInfo(3)"
-								        class="font-normal text-gray-400 underline hover:text-brand-dark hover:no-underline"
-								        v-if="!isInfoShown(3)">I don't know...
-								</button>
-							</p>
-							<div v-if="isInfoShown(3)" class="mt-3 text-gray-500">
-								<p>
-									To map your sensor data flow, you need to know
-									whether
-									the data consumer will perform filtering on the
-									sensor
-									generated data and store the data locally.
-								</p>
-								<ul role="list" class="list-disc ml-4">
-									<li>Contact your vendor partner to determine if
-										the
-										sensor generated data must flow through
-										the
-										manufacturers’ servers
-									</li>
-									<li>Learn more about the sensor data measurement
-										system
-										starting <a
-										    href="https://docs.google.com/presentation/d/1vBEa_ZBhutOCAVVZ2z5Qq8xG2uQ3y2B61LwMUQPJnmw/edit#slide=id.gccf2994462_0_1265"
-										    target="_blank">here</a> in <a
-										    href="https://playbook.dimesociety.org/"
-										    target="_blank" class="italic">The
-											Playbook</a>.
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="flex mt-0.5">
-							<div class="space-y-2">
-								<div class="flex items-center">
-									<input id="analyticstrue" name="analytics"
-									       type="radio"
-									       aria-describedby="Add Manufacturer's Servers"
-									       :checked="isColumnShown('analytics')"
-									       @click="addColumn('analytics')"
-									       class="h-4 w-4 accent-brand-dark border-gray-300">
-									<label for="analyticstrue"
-									       class="ml-1 block text-sm font-medium text-gray-700">
-										Yes </label>
-								</div>
-								<div class="flex items-center">
-									<input id="analyticsfalse" name="analytics"
-									       type="radio"
-									       :checked="!isColumnShown('analytics')"
-									       @click="removeColumn('analytics')"
-									       class="h-4 w-4 accent-brand-dark border-gray-300">
-									<label for="analyticsfalse"
-									       class="ml-1 block text-sm font-medium text-gray-700">
-										No </label>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 
 			</fieldset>
 
-			<div id="slide-design" class="h-full px-12 bg-gray-50" v-if="currentStep === 3">
+			<div id="slide-design" class="h-full px-12 bg-gray-50 min-w-fit" v-if="currentStep === 3">
 				<div class="flex flex-row-reverse gap-6 py-8">
 					<img :src="logo" alt="Digital Medicine Society Logo"
 					     class="h-10 w-auto">
@@ -358,11 +364,15 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 					<CentralizedColumn class="col-span-2"/>
 					<DividerArrow storageId="arrow-4"/>
 					<FilteringStorageColumn/>
-					<DividerArrow v-if="isColumnShown('analytics')" storageId="arrow-5"/>
-					<AnalyticsQueryingColumn v-if="isColumnShown('analytics')"/>
+					<DividerArrow storageId="arrow-5"/>
+					<AnalyticsQueryingColumn/>
 				</div>
-				<p class="pt-8 pb-8 text-sm text-right">Sensor data flow designed using DiMe’s Sensor
+
+				<p class="pt-8 text-sm text-right">Sensor data flow designed using DiMe’s Sensor
 					Data Design Flow Tool</p>
+				<p class="pt-1 pb-8 text-xs text-right text-gray-300">Disclaimer: This is a
+					representative rendering only</p>
+
 			</div>
 
 			<div v-if="currentStep === 4" class="py-4 px-12">
@@ -460,7 +470,7 @@ export default {
 						    this.capturing = false;
 						    this.currentStep = 4;
 						    // for safari?!!?
-						    if ( reRun ) {
+						    if (reRun) {
 							    this.stepNav(4, false)
 						    }
 					    })
@@ -471,6 +481,10 @@ export default {
 			} else {
 				this.currentStep = step
 			}
+		},
+		clearCache: function () {
+			localStorage.clear();
+			this.currentStep = 2
 		},
 		isColumnShown: function (columnKey) {
 			console.log(this.columnOptions.includes(columnKey))
