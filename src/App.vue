@@ -87,7 +87,8 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 				<div class="flex flex-initial gap-4 justify-center">
 
 					<template v-if="currentStep === 4">
-						<button @click="clearCache()" class="text-gray-300 hover:text-red-500 text-xs tooltip"
+						<button @click="clearCache()"
+						        class="text-gray-300 hover:text-red-500 text-xs tooltip"
 						        :tool-tips="'Click to restart design'">
 							<svg xmlns="http://www.w3.org/2000/svg"
 							     fill="currentColor" class="w-4 h-4"
@@ -393,6 +394,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 					</button>
 
 					<a
+					    @click="track(5)"
 					    :href="generatedImage"
 					    download="DiMe-Sensor-Data-Design-Flow.png"
 					    class="bg-brand no-underline border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-brand-light focus:outline-none ring-2 ring-brand-light">
@@ -416,6 +418,7 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 
 import * as htmlToImage from 'html-to-image';
 import {toPng} from 'html-to-image';
+import {screenview} from 'vue-gtag'
 
 export default {
 	name: 'DME App',
@@ -442,6 +445,45 @@ export default {
 		filterForDomImage: function (node) {
 			if (node.classList) return !node.classList.contains("hide-from-image");
 			return true;
+		},
+		track: function (currentStep) {
+			if (currentStep === 2) {
+				console.log('Getting Started')
+				screenview({
+					app_name: 'DiMe Sensor Data Flow Design Tool',
+					screen_name: 'Getting Started',
+				})
+				// if converting to pageview make sure to import the callback above
+				//pageview("/tours-of-duty/sensor-data-integrations/data-architecture/getting-started");
+			} else if (currentStep === 3) {
+				console.log('Design')
+				screenview({
+					app_name: 'DiMe Sensor Data Flow Design Tool',
+					screen_name: 'Design',
+				})
+				//pageview("/tours-of-duty/sensor-data-integrations/data-architecture/design");
+			} else if (currentStep === 4) {
+				console.log('Finish')
+				screenview({
+					app_name: 'DiMe Sensor Data Flow Design Tool',
+					screen_name: 'Finish',
+				})
+				//pageview("/tours-of-duty/sensor-data-integrations/data-architecture/finish");
+			} else if (currentStep === 5) {
+				console.log('Download')
+				screenview({
+					app_name: 'DiMe Sensor Data Flow Design Tool',
+					screen_name: 'Downloaded Image',
+				})
+				//pageview("/tours-of-duty/sensor-data-integrations/data-architecture/downloaded");
+			} else {
+				console.log('Introduction')
+				screenview({
+					app_name: 'DiMe Sensor Data Flow Design Tool',
+					screen_name: 'Introduction',
+				})
+				//pageview("/tours-of-duty/sensor-data-integrations/data-architecture");
+			}
 		},
 		stepNav: function (step, reRun = true) {
 			if (step === 'back') {
@@ -487,7 +529,6 @@ export default {
 			this.currentStep = 2
 		},
 		isColumnShown: function (columnKey) {
-			console.log(this.columnOptions.includes(columnKey))
 			return this.columnOptions.includes(columnKey);
 		},
 		addColumn: function (columnKey) {
@@ -525,12 +566,18 @@ export default {
 		}
 	},
 	mounted() {
+		this.track(1)
 		let storageId = 'dme_columns';
 		if (localStorage.getItem(storageId)) {
 			this.columnOptions = JSON.parse(localStorage.getItem(storageId)) || [];
 		}
 	},
 	watch: {
+		currentStep: {
+			handler(step) {
+				this.track(step);
+			}
+		},
 		columnOptions: {
 			handler(icons) {
 				let storageId = 'dme_columns';
