@@ -2,7 +2,7 @@
 	<div class="relative h-full mx-2">
 
 		<header class="h-12 w-24 mb-2 font-bold mx-auto text-center">
-			<template v-if="title">
+			<template v-if="title !== 'false'">
 				<template v-if="icons.length < 2">{{ title }}</template>
 				<template v-else>{{ pluralTitle }}</template>
 			</template>
