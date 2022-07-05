@@ -3,7 +3,7 @@ import IconColumn from "./IconColumn.vue";
 </script>
 <template>
 	<div>
-		<IconColumn :defaultIcons="defaultIcons" :annotate="true"  :title="title" :pluralTitle="pluralTitle" :storageId="storageId" />
+		<IconColumn :defaultIcons="defaultIcons" :annotate="true"  :title="'false'" :pluralTitle="'false'" :storageId="storageId" />
 	</div>
 </template>
 
