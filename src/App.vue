@@ -415,7 +415,6 @@ import sensorLogo from './assets/icons/sensor-logo.webp'</script>
 </template>
 
 <script>
-
 import * as htmlToImage from 'html-to-image';
 import {toPng} from 'html-to-image';
 import {screenview} from 'vue-gtag'
